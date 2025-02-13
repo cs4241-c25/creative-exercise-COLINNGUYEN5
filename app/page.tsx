@@ -28,14 +28,19 @@ export default function Home() {
   }
 
   function stop() {
-    if (isMoving) {
-      setIsMoving(false);
+    if (animationRef.current !== null) {
       cancelAnimationFrame(animationRef.current);
+      animationRef.current = null; // Reset reference
     }
+    setIsMoving(false);
   }
 
   useEffect(() => {
-    return () => cancelAnimationFrame(animationRef.current);
+    return () => {
+      if (animationRef.current !== null) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
   }, []);
 
   return (
